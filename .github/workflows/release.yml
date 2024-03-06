@@ -1,0 +1,132 @@
+name: Create Release
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+    - main
+
+concurrency:
+  cancel-in-progress: true
+  group: "release-exchange-${GITHUB_REF##*/}"
+
+jobs:
+
+  release:
+    # if: startsWith(github.ref_name, 'release/v')
+    name: Create Release
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@master
+      with:
+        fetch-depth: 0
+
+    - name: Get Version
+      id: version
+      run: |
+        python -m pip install --upgrade pip
+        curl -sSL https://install.python-poetry.org | python3 -
+        echo "version=$(poetry version --short)" >> $GITHUB_OUTPUT
+
+    - name: Checkout latest release tag
+      id: tag_search
+      run: |
+        echo "latest_tag=$(git describe --tags `git rev-list --tags --max-count=1`)" >> $GITHUB_OUTPUT
+
+    - name: Changelog
+      uses: Bullrich/generate-release-changelog@master
+      id: change_commits
+      env:
+        REPO: ${{ github.repository }}
+
+    - name: Build Changelog
+      id: github_release
+      uses: mikepenz/release-changelog-builder-action@v3
+      with:
+        fromTag: ${{ steps.tag_search.outputs.latest_tag }}
+        toTag: ${{ github.ref_name }}
+        configurationJson: |
+          {
+            "categories": [
+                {
+                    "title": "## 🚀 Features",
+                    "labels": ["feat", "Feat", "Feature", "feature"]
+                },
+                {
+                    "title": "## 🐛 Fixes",
+                    "labels": ["fix", "Fix","bug"]
+                },
+                {
+                    "title": "## 🧪 Tests",
+                    "labels": ["test", "Test"]
+                },
+                {
+                    "title": "## 🛺 Pipeline",
+                    "labels": ["pipe", "ci", "cd"]
+                },
+                {
+                    "title": "## 📖 Docs",
+                    "labels": ["docs", "doc", "documentation"]
+                }
+            ],
+            "sort": "ASC",
+            "template": "#{{CHANGELOG}}\n\n<details>\n<summary>Uncategorized</summary>\n\n#{{UNCATEGORIZED}}\n</details>",
+            "pr_template": "- #{{TITLE}}\n   - PR: ##{{NUMBER}}",
+            "empty_template": "- no changes",
+            "transformers": [
+                {
+                    "pattern": "[\\-\\*] (\\[(...|TEST|CI|SKIP)\\])( )?(.+?)\n(.+?[\\-\\*] )(.+)",
+                    "target": "- $4\n  - $6"
+                }
+            ],
+            "max_tags_to_fetch": 200,
+            "max_pull_requests": 200,
+            "max_back_track_time_days": 90,
+            "exclude_merge_branches": [
+                "Owner/qa"
+            ]
+          }
+
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Create Release
+      if: endsWith(github.ref_name, ${{ steps.version.outputs.version }})
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        release_name: ${{ steps.version.outputs.version }}
+        tag_name: ${{ steps.version.outputs.version }}
+        draft: false
+        prerelease: false
+        commitish: ${{github.ref_name }}
+        body: |
+          ## Info
+          Branch ${{ github.ref }}
+          Version ${{ steps.version.outputs.version }}
+          Commit ${{ github.sha }} was deployed. [See code diff](${{ github.event.compare }}).
+          It was initialized by [${{ github.event.sender.login }}](${{ github.event.sender.html_url }}).
+
+          ## Release's PR's Statistics
+          Changed Files: ${{steps.github_release.outputs.changed_files}}
+          Additions: ${{steps.github_release.outputs.additions}}
+          Deletions: ${{steps.github_release.outputs.deletions}}
+          Changes: ${{steps.github_release.outputs.changes}}
+          Commits: ${{steps.github_release.outputs.commits}}
+
+          ## ChangeLog
+
+          ADD HERE CHANGES
+
+          ## Pull Requests Since Last Tag
+          ${{steps.github_release.outputs.changelog}}
+
+          ## Last Commits Since Last Tag
+          ${{ steps.change_commits.outputs.changelog }}
+
+          ## How to Promote?
+          In order to promote this to `production`, edit the draft and press **"Publish release"**.

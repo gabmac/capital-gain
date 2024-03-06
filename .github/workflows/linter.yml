@@ -1,0 +1,63 @@
+name: Linter
+
+on:
+  workflow_dispatch:
+  workflow_call:
+
+jobs:
+  linter:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: |
+        echo ${{ github.base_ref }}
+        python -m pip install --upgrade pip
+        curl -sSL https://install.python-poetry.org | python3 -
+
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.10'
+        cache: 'poetry'
+
+    - name: "Install dependencies - poetry"
+      run: |
+        poetry install --only code-smells
+
+    - name: Run black check
+      run: poetry run black --check .
+
+    - name: Run flake8 check
+      run: poetry run flake8 --config=.flake8 --count .
+
+    - name: Run mypy check
+      run: poetry run mypy system
+
+    - name: Run isort check
+      run: poetry run isort . -c
+
+    - name: Run autoflake check
+      run: >
+        poetry run autoflake -c -i -r --in-place --remove-all-unused-imports --remove-duplicate-keys --remove-unused-variable .
+
+    - name: Analysing the code with pylint
+      run: >
+        poetry run pylint --disable=all
+        --ignore-paths=alembic
+        --max-line-length=240
+        --enable=unused-import,singleton-comparison,unidiomatic-typecheck,consider-using-enumerate,\
+        consider-iterating-dictionary,line-too-long,too-many-lines,trailing-whitespace,missing-final-newline,\
+        bad-whitespace,bad-continuation,wrong-import-order,ungrouped-imports,wrong-import-position,return-in-init,\
+        function-redefined,not-in-loop,return-outside-function,undefined-variable,no-staticmethod-decorator,bad-indentation,\
+        wildcard-import,unused-variable,unused-argument
+        $(git ls-files '*.py')
+
+    - name: Bandit Runnintg
+      run: >
+        poetry run bandit -r system
+
+    - name: Pip Audit
+      run: >
+        poetry export --without-hashes | poetry run pip-audit --no-deps -r /dev/stdin
