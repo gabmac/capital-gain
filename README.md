@@ -52,7 +52,7 @@ Using Gherkin for acceptance tests ensures that the tests are easily readable an
     - **When** the sale's total (unit cost * quantity) value exceeds R$ 20,000.00
     - **And** the selling price is higher than the *weighted average price*
     - **Then** a 20% tax is calculated on the profit
-    
+
 2. **Scenario**: Loss Adjustment
 
     - **Given** the trader has previously sold stocks at a loss
@@ -70,7 +70,7 @@ Using Gherkin for acceptance tests ensures that the tests are easily readable an
     - **Given** the trader buys stocks
     - **When** transactions are analyzed for tax
     - **Then** purchases are excluded from tax calculation
-  
+
 ---
 
 ## **DDD**
@@ -82,8 +82,8 @@ In the challenge, we have a very well-defined objective, so we were able to iden
 
 |Operation|
 |---|
-|operation: OperationType| 
-|unit-cost:float| 
+|operation_type: OperationType|
+|unit-cost:float|
 |quantity: int|
 |tax:float|
 
@@ -274,4 +274,3 @@ Clean architecture is composed of several layers, which typically include:
 **Application**: The application layer is responsible for orchestrating the actions of the system, applying the business rules of the entity layer.
 
 **Infrastructure**: This is the layer responsible for implementing technical details, such as access to databases, calls to external services, etc.
-
