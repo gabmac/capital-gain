@@ -1,0 +1,78 @@
+[tool.poetry]
+name = "capital-gain"
+version = "0.1.0"
+description = "Capital Gain Project"
+authors = ["Gabriel <gabrielbonanimachado@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pydantic = "^2.2.0"
+
+
+[tool.poetry.group.code-smells.dependencies]
+flake8 = "^6.1.0"
+mypy = "^1.5.1"
+isort = "^5.12.0"
+pre-commit = "^3.3.3"
+autoflake = "^2.2.0"
+pylint = "^2.17.5"
+black = "^23.7.0"
+pip-audit = "^2.7.1"
+bandit = {extras = ["toml"], version = "^1.7.7"}
+
+
+[tool.poetry.group.dev.dependencies]
+coverage = {extras = ["toml"], version = "^7.4.3"}
+conventional-pre-commit = "^2.3.0"
+freezegun = "^1.2.2"
+httpx = "^0.24.1"
+
+
+[tool.poetry.group.debugpy.dependencies]
+debugpy = "^1.6.7.post1"
+
+[build-system]
+requires = ["poetry-core"]
+
+
+[tool.coverage.run]
+branch = true
+include = [
+    "system/infrastructure/adapters/entrypoints/api/routes/*",
+    "system/application/usecase/*",
+    "system/infrastructure/adapters/database/repositories/*",
+]
+omit = ["*__.py", "*exception*", "system/application/usecase/usecase.py"]
+[tool.coverage.report]
+fail_under = 80
+sort = "-Cover"
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+src_paths = ["system",]
+
+[tool.mypy]
+install_types=true
+non_interactive=true
+disable_error_code = ["abstract"]
+exclude = "common|models"
+strict = true
+ignore_missing_imports = true
+allow_subclassing_any = true
+allow_untyped_calls = true
+pretty = true
+show_error_codes = true
+implicit_reexport = true
+allow_untyped_decorators = true
+warn_return_any = false
+warn_unused_ignores = false
+
+[tool.pytest.ini_options]
+filterwarnings = [
+    "error",
+    "ignore::DeprecationWarning",
+    "ignore::pytest.PytestConfigWarning",
+    "ignore:.*unclosed.*:ResourceWarning",
+]
