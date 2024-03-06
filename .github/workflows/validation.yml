@@ -1,0 +1,29 @@
+name: Validation Pipeline
+
+on:
+  workflow_dispatch:
+  pull_request:
+
+
+jobs:
+
+  labeler:
+    uses: ./.github/workflows/pull_request_labeler.yml
+
+
+  sync-branch:
+    uses: ./.github/workflows/merge_main.yml
+
+  update_package:
+    needs: [sync-branch]
+    uses: ./.github/workflows/update_package.yml
+
+  linter:
+    needs: [update_package]
+    if: needs.update_package.outputs.changes == 'false'
+    uses: ./.github/workflows/linter.yml
+
+  tests:
+    needs: [update_package]
+    if: needs.update_package.outputs.changes == 'false'
+    uses: ./.github/workflows/tests.yml

@@ -1,0 +1,71 @@
+name: Tests
+
+on:
+  workflow_dispatch:
+  workflow_call:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    env:
+      BRANCH_NAME: "${{ github.event.pull_request.base.ref }}"
+    permissions:
+      contents: read
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install dependencies - pip
+      run: |
+        echo ${{ github.base_ref }}
+        python -m pip install --upgrade pip
+        pip install awscli
+        curl -sSL https://install.python-poetry.org | python3 -
+
+    - name: "Set up Python"
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.10'
+        cache: 'poetry'
+
+    - name: "Install dependencies - poetry"
+      run: |
+        echo ${{ github.base_ref }}
+        # python -m pip install --upgrade pip
+        poetry install --without code-smells
+      env:
+        POETRY_VIRTUALENVS_CREATE: true
+        AWS_ACCESS_KEY_ID: "teste"
+        AWS_SECRET_ACCESS_KEY: "teste"
+        AWS_DEFAULT_REGION: "us-east-1"
+
+    - name: Setup DynamoDB Local
+      uses: rrainn/dynamodb-action@v2.0.1
+      with:
+        sharedDb: true
+        InMemory: true
+        port: 8000
+        cors: '*'
+      env:
+        AWS_ACCESS_KEY_ID: "teste"
+        AWS_SECRET_ACCESS_KEY: "teste"
+        AWS_DEFAULT_REGION: "us-east-1"
+        ENVIRONMENT: "test"
+
+    - name: Test Dynamodb Local connectivity
+      env:
+        AWS_ACCESS_KEY_ID: "teste"
+        AWS_SECRET_ACCESS_KEY: "teste"
+        AWS_DEFAULT_REGION: "us-east-1"
+        ENVIRONMENT: "test"
+      run: |
+        aws dynamodb list-tables --endpoint-url http://localhost:8000
+
+    - name: Unittest
+      env:
+        POETRY_VIRTUALENVS_CREATE: true
+        AWS_ACCESS_KEY_ID: "teste"
+        AWS_SECRET_ACCESS_KEY: "teste"
+        ENVIRONMENT: "test"
+      run: |
+        poetry run coverage run -m unittest -v
+        poetry run coverage report
