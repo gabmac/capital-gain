@@ -1,11 +1,15 @@
-from abc import ABC, abstractmethod
 from typing import Dict, List, Union
 
 from system.application.dto.tax_dto import OperationTaxDto
+from system.application.ports.usecase.operation_tax_calculator_port import (
+    OperationTaxCalculatorPort,
+)
 
 
-class OperationTaxCalculatorPort(ABC):
-    @abstractmethod
+class OperationTaxCalculatorUseCase(OperationTaxCalculatorPort):
+    def __init__(self) -> None:
+        self.loss = 0
+
     def caculate_tax(
         self,
         operation: List[Dict[str, Union[str, int, float]]],
@@ -13,3 +17,4 @@ class OperationTaxCalculatorPort(ABC):
         """
         Calculate tax given an operation list
         """
+        raise Exception()
