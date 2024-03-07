@@ -41,7 +41,6 @@ find "$DIRECTORY" -type f -name "$PATTERN" | while read -r file; do
     failed=1
     break # Exit the loop on the first failure
   fi
-
   # Clean up the temporary file
   rm "$temp_output"
 done
