@@ -30,4 +30,4 @@ jobs:
   tests-case:
     needs: [update_package]
     if: needs.update_package.outputs.changes == 'false'
-    uses: ./.github/workflows/tests-case.yml
+    uses: ./.github/workflows/tests_case.yml
