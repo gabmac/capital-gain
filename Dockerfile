@@ -20,7 +20,6 @@ COPY pyproject.toml .
 COPY system system
 
 RUN poetry install --only main
-
 ENTRYPOINT [ "sh", "-c" ]
 
 FROM build as build-test

@@ -37,11 +37,10 @@ requires = ["poetry-core"]
 [tool.coverage.run]
 branch = true
 include = [
-    "system/infrastructure/adapters/entrypoints/api/routes/*",
+    "system/infrastructure/adapters/entrypoints/*",
     "system/application/usecase/*",
-    "system/infrastructure/adapters/database/repositories/*",
 ]
-omit = ["*__.py", "*exception*", "system/application/usecase/usecase.py"]
+omit = ["*__.py", "*exception*",]
 [tool.coverage.report]
 fail_under = 80
 sort = "-Cover"
