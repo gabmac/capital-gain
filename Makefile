@@ -13,4 +13,4 @@ run-unit-test:
 	docker run capital-gain-test
 
 run:
-	docker run capital-gain-local
+	docker run -i capital-gain-local
