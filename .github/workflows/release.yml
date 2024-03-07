@@ -69,6 +69,10 @@ jobs:
                 {
                     "title": "## 📖 Docs",
                     "labels": ["docs", "doc", "documentation"]
+                },
+                {
+                    "title": "## 👨‍🔧 Build",
+                    "labels": ["build"]
                 }
             ],
             "sort": "ASC",

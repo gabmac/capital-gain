@@ -12,3 +12,7 @@ class BaseConfTest(IsolatedAsyncioTestCase):
 
 class BaseUseCaseConfTest(BaseConfTest):
     pass
+
+
+class BaseStdinConfTest(BaseConfTest):
+    pass
