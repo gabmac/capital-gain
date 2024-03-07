@@ -32,8 +32,10 @@ jobs:
         poetry config virtualenvs.create false
         poetry install --only main
       env:
-        POETRY_VIRTUALENVS_CREATE: false
+        POETRY_VIRTUALENVS_CREATE: true
 
     - name: Test
       run: |
         ./cases/test_case.sh
+      env:
+        RUN_POETRY: 0
