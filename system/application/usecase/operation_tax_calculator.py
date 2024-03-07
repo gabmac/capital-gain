@@ -10,7 +10,7 @@ from system.domain.entity.operation_entity import OperationEntity
 
 class OperationTaxCalculatorUseCase(OperationTaxCalculatorPort):
     def __init__(self) -> None:
-        self.balance = 0.0
+        self.loss = 0.0
         self._weighted_average_price = 0.0
         self._quantity = 0
 
@@ -33,7 +33,7 @@ class OperationTaxCalculatorUseCase(OperationTaxCalculatorPort):
             else:
                 operation_entity.tax = self._calculate_tax(operation=operation_entity)
 
-            self._update_balance(operation=operation_entity)
+            self._update_loss(operation=operation_entity)
 
             tax_list.append(
                 OperationTaxDto.model_validate(operation_entity),
@@ -45,10 +45,7 @@ class OperationTaxCalculatorUseCase(OperationTaxCalculatorPort):
         return OperationTax.MINIMUM_THRESHOLD.value >= operation.total_cost
 
     def _operation_type_is_not_applicable(self, operation: OperationEntity) -> bool:
-        return operation.operation_type.value == OperationType.SELL.value
-
-    def _balance_not_enough(self) -> bool:
-        return self.balance >= 0
+        return operation.operation_type.value == OperationType.BUY.value
 
     def _update_weighted_average_price(self, operation: OperationEntity) -> None:
         if operation.operation_type.value == OperationType.BUY.value:
@@ -67,13 +64,16 @@ class OperationTaxCalculatorUseCase(OperationTaxCalculatorPort):
         )
         self._quantity += added_quantity
 
-    def _update_balance(self, operation: OperationEntity) -> None:
+    def _update_loss(self, operation: OperationEntity) -> None:
         if operation.operation_type.value == OperationType.SELL.value:
-            value = self._weighted_average_price * self._quantity - operation.total_cost
-            self.balance = self.balance + value
+            value = (
+                operation.total_cost - self._weighted_average_price * operation.quantity
+            )
+            remained_loss = self.loss + value
+            self.loss = remained_loss if remained_loss < 0 else 0
 
     def _calculate_tax(self, operation: OperationEntity) -> float:
-        loss = self.balance if self.balance < 0 else 0
+        loss = self.loss if self.loss < 0 else 0
         tax = OperationTax.TAX_PERCENT.value * (
             (operation.unit_cost - self._weighted_average_price) * operation.quantity
             + loss

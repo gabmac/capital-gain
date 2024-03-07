@@ -28,33 +28,6 @@ class OperationEntityFixture:
         )
 
     @property
-    def mock_sell_with_loss(self) -> List[OperationEntity]:
-        buy_operation = OperationEntity(
-            operation_type=OperationType.BUY.value,
-            unit_cost=self.unit_cost,
-            quantity=self.quantity,
-            tax=self.tax,
-        )
-        sell_operation_loss = OperationEntity(
-            operation_type=OperationType.SELL.value,
-            unit_cost=self.unit_cost / 2,
-            quantity=self.quantity / 2,
-            tax=0,
-        )
-        sell_operation_profit = OperationEntity(
-            operation_type=OperationType.SELL.value,
-            unit_cost=self.unit_cost * 1.5,
-            quantity=self.quantity / 2,
-            tax=0,
-        )
-
-        return [
-            buy_operation,
-            sell_operation_loss,
-            sell_operation_profit,
-        ]
-
-    @property
     def mock_sell_with_profit(self) -> List[OperationEntity]:
         buy_operation = OperationEntity(
             operation_type=OperationType.BUY.value,
@@ -100,22 +73,20 @@ class OperationTaxDTOFixture:
 
     @property
     def mock_buy_tax_value(self) -> OperationTaxDto:
-        return OperationTaxDto.model_dump(self.entity_fixture_sell.mock_operation)
+        return OperationTaxDto.model_validate(self.entity_fixture_buy.mock_operation)
 
     @property
     def mock_sell_tax_value(self) -> OperationTaxDto:
-        return OperationTaxDto.model_dump(self.entity_fixture_buy.mock_operation)
-
-    @property
-    def mock_sell_with_loss(self) -> List[OperationTaxDto]:
-        return [
-            OperationTaxDto.model_dump(operation)
-            for operation in self.entity_fixture_buy.mock_sell_with_loss
-        ]
+        tax = (
+            self.entity_fixture_sell.mock_operation.tax
+            if self.entity_fixture_sell.mock_operation.tax
+            else 0
+        )
+        return OperationTaxDto(tax=tax)
 
     @property
     def mock_sell_with_profit(self) -> List[OperationTaxDto]:
         return [
-            OperationTaxDto.model_dump(operation)
+            OperationTaxDto.model_validate(operation)
             for operation in self.entity_fixture_buy.mock_sell_with_profit
         ]
