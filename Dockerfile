@@ -34,8 +34,6 @@ CMD ["python -m system"]
 
 FROM build-test as test
 
-COPY tests code/
-
 RUN poetry install --only dev
 
 CMD ["coverage run -m unittest discover -v -s ./tests -p '*test*.py';coverage report;exit 0"]
