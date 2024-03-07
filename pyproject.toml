@@ -8,6 +8,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.10"
 pydantic = "^2.6.3"
+typing-extensions = "^4.10.0"
 
 
 [tool.poetry.group.code-smells.dependencies]
