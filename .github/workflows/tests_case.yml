@@ -1,11 +1,11 @@
-name: Tests
+name: Tests Case
 
 on:
   workflow_dispatch:
   workflow_call:
 
 jobs:
-  tests:
+  tests-case:
     runs-on: ubuntu-latest
     env:
       BRANCH_NAME: "${{ github.event.pull_request.base.ref }}"
