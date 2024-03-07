@@ -28,7 +28,7 @@ jobs:
 
     - name: "Install dependencies - poetry"
       env:
-        POETRY_VIRTUALENVS_CREATE: true
+        POETRY_VIRTUALENVS_CREATE: false
       run: |
         echo ${{ github.base_ref }}
         poetry install --only main
