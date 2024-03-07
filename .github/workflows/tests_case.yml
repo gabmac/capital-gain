@@ -5,7 +5,7 @@ on:
   workflow_call:
 
 jobs:
-  tests-case:
+  test-case:
     runs-on: ubuntu-latest
     env:
       BRANCH_NAME: "${{ github.event.pull_request.base.ref }}"
@@ -30,10 +30,8 @@ jobs:
       run: |
         echo ${{ github.base_ref }}
         poetry install --only main
-      env:
-        POETRY_VIRTUALENVS_CREATE: true
 
-    - name: Test
+    - name: test case
       run: |
         ./cases/test_case.sh
       env:
