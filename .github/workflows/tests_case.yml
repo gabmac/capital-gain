@@ -31,6 +31,7 @@ jobs:
         POETRY_VIRTUALENVS_CREATE: false
       run: |
         echo ${{ github.base_ref }}
+        poetry config virtualenvs.create false
         poetry install --only main
 
     - name: Test
