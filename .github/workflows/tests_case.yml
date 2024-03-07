@@ -10,7 +10,7 @@ jobs:
     env:
       BRANCH_NAME: "${{ github.event.pull_request.base.ref }}"
     permissions:
-      contents: write
+      contents: read
     steps:
     - uses: actions/checkout@v3
 
