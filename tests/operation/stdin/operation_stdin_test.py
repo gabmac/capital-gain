@@ -22,7 +22,7 @@ class TestOperationStdIn(OperationStdinConfTest):
         result = self.input_handler.read_input()
         self.assertEqual(
             result,
-            [self.operation_tax_fixture.mock_buy_tax_value],
+            [self.operation_tax_fixture.mock_buy_tax_value.model_dump()],
         )
         self.patch_use_case.target.caculate_tax.assert_called_once_with(
             operations=[
