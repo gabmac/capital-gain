@@ -36,4 +36,4 @@ jobs:
 
     - name: Test
       run: |
-        bash ./cases/test_case.sh
+        ./cases/test_case.sh
