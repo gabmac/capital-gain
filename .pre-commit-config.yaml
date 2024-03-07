@@ -1,0 +1,118 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.3.0
+  hooks:
+  - id: check-ast
+  - id: trailing-whitespace
+  - id: check-toml
+  - id: check-case-conflict
+  - id: check-json
+    exclude: ^(.vscode/|.github/workflows/configuration.json)
+  - id: pretty-format-json
+    exclude: ^(common/|deploy/task-definition.json|database_modeler.json|.vscode/|legacy_integration_table.json|legacy_token_manager_table.json)
+  - id: mixed-line-ending
+  - id: debug-statements
+  - id: check-added-large-files
+    exclude: /static/
+  - id: check-xml
+  - id: check-yaml
+    exclude: ^deploy/kube/
+  - id: detect-aws-credentials
+    args: [--allow-missing-credentials]
+  - id: detect-private-key
+  - id: end-of-file-fixer
+
+- repo: https://github.com/compilerla/conventional-pre-commit
+  rev: v2.2.0
+  hooks:
+  - id: conventional-pre-commit
+    stages: [commit-msg]
+    args: [fixup!, build, chore, ci, docs, style, refactor, perf, test]
+
+- repo: https://github.com/asottile/pyupgrade
+  rev: v2.34.0
+  hooks:
+  - id: pyupgrade
+    args: [--py36-plus]
+
+- repo: https://github.com/asottile/add-trailing-comma
+  rev: v2.1.0
+  hooks:
+  - id: add-trailing-comma
+
+- repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
+  rev: v2.3.0
+  hooks:
+  - id: pretty-format-yaml
+    args:
+    - --autofix
+    - --preserve-quotes
+    - --indent=2
+
+- repo: local
+  hooks:
+  - id: black
+    name: Format with Black
+    entry: poetry run black .
+    language: system
+    types: [python]
+
+  - id: autoflake
+    name: autoflake
+    entry: poetry run autoflake
+    language: system
+    types: [python]
+    args: [-r, --in-place, --remove-all-unused-imports, --remove-duplicate-keys, --remove-unused-variables, .]
+
+  - id: isort
+    name: isort
+    entry: poetry run isort .
+    language: system
+    types: [python]
+
+  - id: flake8
+    name: Check with Flake8
+    entry: poetry run flake8
+    language: system
+    pass_filenames: false
+    types: [python]
+    args: [--count, .]
+
+  - id: pylint
+    name: Pylint validation
+    entry: poetry run pylint
+    language: system
+    types: [python]
+    args:
+    - --disable=all
+    - --ignore-paths=alembic
+    - --max-line-length=240
+    - --enable=unused-import,singleton-comparison,unidiomatic-typecheck,consider-using-enumerate, consider-iterating-dictionary,line-too-long,too-many-lines,trailing-whitespace,missing-final-newline, bad-whitespace,bad-continuation,wrong-import-order,ungrouped-imports,wrong-import-position,return-in-init, function-redefined,not-in-loop,return-outside-function,undefined-variable,no-staticmethod-decorator,bad-indentation, wildcard-import,unused-variable,unused-argument
+    - $(git ls-files '*.py')
+
+  - id: mypy
+    name: Validate types with MyPy
+    entry: poetry run mypy
+    language: system
+    types: [python]
+    pass_filenames: false
+    args:
+    - "system"
+    - --config=pyproject.toml
+
+  - id: bandit
+    name: Bandit validation
+    entry: poetry run bandit
+    language: system
+    types: [python]
+    args:
+    - -r
+    - system
+
+#  - id: pip-audit
+#    name: Pip Audit validation
+#    entry: bash -c "poetry export --without-hashes | poetry run pip-audit --no-deps -r /dev/stdin"
+#    language: system
+#    types: [python]

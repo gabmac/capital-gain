@@ -1,0 +1,378 @@
+{
+    "ops1": {
+        "input": [
+            {
+                "operation": "buy",
+                "unit-cost": 10.00,
+                "quantity": 10000
+            },
+            {
+                "operation": "sell",
+                "unit-cost": 20.00,
+                "quantity": 5000
+            }
+        ],
+        "output": [
+            {
+                "tax": 0
+            },
+            {
+                "tax": 10000
+            }
+        ]
+    },
+    "ops2": {
+        "input": [
+            {
+                "operation": "buy",
+                "unit-cost": 20.00,
+                "quantity": 10000
+            },
+            {
+                "operation": "sell",
+                "unit-cost": 10.00,
+                "quantity": 5000
+            }
+        ],
+        "output": [
+            {
+                "tax": 0
+            },
+            {
+                "tax": 0
+            }
+        ]
+    },
+    "case1": {
+        "input": [
+            {
+                "operation": "buy",
+                "unit-cost": 10.00,
+                "quantity": 100
+            },
+            {
+                "operation": "sell",
+                "unit-cost": 15.00,
+                "quantity": 50
+            },
+            {
+                "operation": "sell",
+                "unit-cost": 15.00,
+                "quantity": 50
+            }
+        ],
+        "output": [
+            {
+                "operation": "buy",
+                "unit-cost": 10.00,
+                "quantity": 100
+            },
+            {
+                "operation": "sell",
+                "unit-cost": 15.00,
+                "quantity": 50
+            },
+            {
+                "operation": "sell",
+                "unit-cost": 15.00,
+                "quantity": 50
+            }
+        ]
+    },
+    "case2": {
+        "input": [
+            {
+                "operation": "buy",
+                "unit-cost": 10.00,
+                "quantity": 10000
+            },
+            {
+                "operation": "sell",
+                "unit-cost": 20.00,
+                "quantity": 5000
+            },
+            {
+                "operation": "sell",
+                "unit-cost": 5.00,
+                "quantity": 5000
+            }
+        ],
+        "output": [
+            {
+                "operation": "buy",
+                "unit-cost": 10.00,
+                "quantity": 10000
+            },
+            {
+                "operation": "sell",
+                "unit-cost": 20.00,
+                "quantity": 5000
+            },
+            {
+                "operation": "sell",
+                "unit-cost": 5.00,
+                "quantity": 5000
+            }
+        ]
+    },
+    "case3": {
+        "input": [
+            {
+                "operation": "buy",
+                "unit-cost": 10.00,
+                "quantity": 10000
+            },
+            {
+                "operation": "sell",
+                "unit-cost": 5.00,
+                "quantity": 5000
+            },
+            {
+                "operation": "sell",
+                "unit-cost": 20.00,
+                "quantity": 3000
+            }
+        ],
+        "output": [
+            {
+                "tax": 0.00
+            },
+            {
+                "tax": 0.00
+            },
+            {
+                "tax": 1000.00
+            }
+        ]
+    },
+    "case4": {
+        "input": [
+            {
+                "operation": "buy",
+                "unit-cost": 10.00,
+                "quantity": 10000
+            },
+            {
+                "operation": "buy",
+                "unit-cost": 25.00,
+                "quantity": 5000
+            },
+            {
+                "operation": "sell",
+                "unit-cost": 15.00,
+                "quantity": 10000
+            }
+        ],
+        "output": [
+            {
+                "tax": 0
+            },
+            {
+                "tax": 0
+            },
+            {
+                "tax": 0
+            }
+        ]
+    },
+    "case5": {
+        "input": [
+            {
+                "operation": "buy",
+                "unit-cost": 10.00,
+                "quantity": 10000
+            },
+            {
+                "operation": "buy",
+                "unit-cost": 25.00,
+                "quantity": 5000
+            },
+            {
+                "operation": "sell",
+                "unit-cost": 15.00,
+                "quantity": 10000
+            },
+            {
+                "operation": "sell",
+                "unit-cost": 25.00,
+                "quantity": 5000
+            }
+        ],
+        "output": [
+            {
+                "tax": 0.00
+            },
+            {
+                "tax": 0.00
+            },
+            {
+                "tax": 0.00
+            },
+            {
+                "tax": 10000.00
+            }
+        ]
+    },
+    "case6": {
+        "input": [
+            {
+                "operation": "buy",
+                "unit-cost": 10.00,
+                "quantity": 10000
+            },
+            {
+                "operation": "sell",
+                "unit-cost": 2.00,
+                "quantity": 5000
+            },
+            {
+                "operation": "sell",
+                "unit-cost": 20.00,
+                "quantity": 2000
+            },
+            {
+                "operation": "sell",
+                "unit-cost": 20.00,
+                "quantity": 2000
+            },
+            {
+                "operation": "sell",
+                "unit-cost": 25.00,
+                "quantity": 1000
+            }
+        ],
+        "output": [
+            {
+                "tax": 0.00
+            },
+            {
+                "tax": 0.00
+            },
+            {
+                "tax": 0.00
+            },
+            {
+                "tax": 0.00
+            },
+            {
+                "tax": 3000.00
+            }
+        ]
+    },
+    "case7": {
+        "input": [
+            {
+                "operation": "buy",
+                "unit-cost": 10.00,
+                "quantity": 10000
+            },
+            {
+                "operation": "sell",
+                "unit-cost": 2.00,
+                "quantity": 5000
+            },
+            {
+                "operation": "sell",
+                "unit-cost": 20.00,
+                "quantity": 2000
+            },
+            {
+                "operation": "sell",
+                "unit-cost": 20.00,
+                "quantity": 2000
+            },
+            {
+                "operation": "sell",
+                "unit-cost": 25.00,
+                "quantity": 1000
+            },
+            {
+                "operation": "buy",
+                "unit-cost": 20.00,
+                "quantity": 10000
+            },
+            {
+                "operation": "sell",
+                "unit-cost": 15.00,
+                "quantity": 5000
+            },
+            {
+                "operation": "sell",
+                "unit-cost": 30.00,
+                "quantity": 4350
+            },
+            {
+                "operation": "sell",
+                "unit-cost": 30.00,
+                "quantity": 650
+            }
+        ],
+        "output": [
+            {
+                "tax": 0.00
+            },
+            {
+                "tax": 0.00
+            },
+            {
+                "tax": 0.00
+            },
+            {
+                "tax": 0.00
+            },
+            {
+                "tax": 3000.00
+            },
+            {
+                "tax": 0.00
+            },
+            {
+                "tax": 0.00
+            },
+            {
+                "tax": 3700.00
+            },
+            {
+                "tax": 0.00
+            }
+        ]
+    },
+    "case8": {
+        "input": [
+            {
+                "operation": "buy",
+                "unit-cost": 10.00,
+                "quantity": 10000
+            },
+            {
+                "operation": "sell",
+                "unit-cost": 50,
+                "quantity": 10000
+            },
+            {
+                "operation": "buy",
+                "unit-cost": 20,
+                "quantity": 10000
+            },
+            {
+                "operation": "sell",
+                "unit-cost": 50,
+                "quantity": 10000
+            }
+        ],
+        "output": [
+            {
+                "tax": 0.00
+            },
+            {
+                "tax": 80000.00
+            },
+            {
+                "tax": 0.00
+            },
+            {
+                "tax": 60000.00
+            }
+        ]
+    }
+}

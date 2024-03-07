@@ -1,0 +1,54 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg
+*.egg-info
+dist/
+build/
+
+# Virtual environments and pip cache
+venv/
+*.venv
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Logs
+*.log
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+*,cover
+
+# IDEs/Editors
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS generated
+.DS_Store
+Thumbs.db
+
+# Database
+*.db
+*.sqlite3
+
+# Other
+*.env
+*.local
+
+
+# Config Files
+.editorconfig
+.flake8
+.pre-commit-config.yaml
+README.md
+
+# Images
+*.svg
