@@ -1,0 +1,8 @@
+[flake8]
+max-cognitive-score = 100
+max-complexity = 16
+inline-quotes = double
+max-line-length = 130
+extend-ignore = E203
+docstring_style=sphinx
+max-annotations-complexity = 5
