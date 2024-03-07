@@ -8,3 +8,4 @@ class OperationType(Enum):
 
 class OperationTax(Enum):
     ROUND = 2
+    TAX_PERCENT = 0.2

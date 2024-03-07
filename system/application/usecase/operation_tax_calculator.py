@@ -12,7 +12,7 @@ class OperationTaxCalculatorUseCase(OperationTaxCalculatorPort):
 
     def caculate_tax(
         self,
-        operation: List[Dict[str, Union[str, int, float]]],
+        operations: List[Dict[str, Union[str, int, float]]],
     ) -> List[OperationTaxDto]:
         """
         Calculate tax given an operation list

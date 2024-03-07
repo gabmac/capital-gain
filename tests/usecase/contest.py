@@ -11,5 +11,8 @@ class OperationUseCaseConfTest(BaseUseCaseConfTest, BaseOperationConfTest):
     @classmethod
     def setUpClass(cls) -> None:
         cls.operation_tax_fixture = OperationTaxDTOFixture()
-        cls.tax_calculator_usecase = OperationTaxCalculatorUseCase()
+        return super().setUp()
+
+    def setUp(self) -> None:
+        self.tax_calculator_usecase = OperationTaxCalculatorUseCase()
         return super().setUp()
