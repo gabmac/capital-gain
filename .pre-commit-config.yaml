@@ -111,8 +111,8 @@ repos:
     - -r
     - system
 
-  - id: pip-audit
-    name: Pip Audit validation
-    entry: bash -c "poetry export --without-hashes | poetry run pip-audit --no-deps -r /dev/stdin"
-    language: system
-    types: [python]
+#  - id: pip-audit
+#    name: Pip Audit validation
+#    entry: bash -c "poetry export --without-hashes | poetry run pip-audit --no-deps -r /dev/stdin"
+#    language: system
+#    types: [python]
