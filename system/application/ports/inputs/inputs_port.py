@@ -1,12 +1,10 @@
 from abc import ABC, abstractmethod
-from typing import List, Optional
-
-from system.application.dto.tax_dto import OperationTaxDto
+from typing import Dict, List, Optional, Union
 
 
 class ReadInputPort(ABC):
     @abstractmethod
-    def read_input(self) -> Optional[List[OperationTaxDto]]:
+    def read_input(self) -> Optional[List[Dict[str, Union[str, int, float]]]]:
         """
         Read Input From any kind of input
         """

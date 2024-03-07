@@ -1,7 +1,6 @@
 import json
-from typing import List, Optional, Type
+from typing import Dict, List, Optional, Type, Union
 
-from system.application.dto.tax_dto import OperationTaxDto
 from system.application.ports.inputs.inputs_port import ReadInputPort
 from system.application.ports.usecase.operation_tax_calculator_port import (
     OperationTaxCalculatorPort,
@@ -17,15 +16,18 @@ class ReadStdIn(ReadInputPort):
     def input(self) -> None:
         self.data = input()
 
-    def read_input(self) -> Optional[List[OperationTaxDto]]:
+    def read_input(self) -> Optional[List[Dict[str, Union[str, int, float]]]]:
         """
         Read Input From StdIn
         """
 
         if self.data:
             json_data = json.loads(self.data)
-            return self.usecase.caculate_tax(
-                operations=json_data,
-            )
+            return [
+                data.model_dump(mode="json")
+                for data in self.usecase.caculate_tax(
+                    operations=json_data,
+                )
+            ]
 
         return None
