@@ -321,8 +321,8 @@ There are all example project cases
 
 Every Pull Request follows:
 
-[Pull Request](/images/pull_request.PNG)
+![Pull Request](/images/pull_request.PNG)
 
 After the merge on main, there will be a release:
 
-[Release](/images/release.PNG)
+![Release](/images/release.PNG)
