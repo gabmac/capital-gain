@@ -45,10 +45,10 @@ class OperationTaxCalculatorUseCase(OperationTaxCalculatorPort):
         return OperationTax.MINIMUM_THRESHOLD.value >= operation.total_cost
 
     def _operation_type_is_not_applicable(self, operation: OperationEntity) -> bool:
-        return operation.operation_type.value == OperationType.BUY.value
+        return operation.type.value == OperationType.BUY.value
 
     def _update_weighted_average_price(self, operation: OperationEntity) -> None:
-        if operation.operation_type.value == OperationType.BUY.value:
+        if operation.type.value == OperationType.BUY.value:
             if not self._weighted_average_price or not self._quantity:
                 self._weighted_average_price = operation.unit_cost
             else:
@@ -59,13 +59,13 @@ class OperationTaxCalculatorUseCase(OperationTaxCalculatorPort):
     def _update_quantity(self, operation: OperationEntity) -> None:
         added_quantity = (
             operation.quantity
-            if operation.operation_type.value == OperationType.BUY.value
+            if operation.type.value == OperationType.BUY.value
             else -operation.quantity
         )
         self._quantity += added_quantity
 
     def _update_loss(self, operation: OperationEntity) -> None:
-        if operation.operation_type.value == OperationType.SELL.value:
+        if operation.type.value == OperationType.SELL.value:
             value = (
                 operation.total_cost - self._weighted_average_price * operation.quantity
             )

@@ -7,15 +7,16 @@ from system.domain.entity.base_entity import BaseEntity
 
 
 class OperationEntity(BaseEntity):
-    operation_type: OperationType = Field(
+    type: OperationType = Field(
         description="Operaration Type information",
         alias="operation",
     )
-    unit_cost: float = Field(description="Cost per stock unit", alias="unit-cost")
-    quantity: int = Field(description="Stock Quantity per operation")
+    unit_cost: float = Field(description="Cost per stock unit", alias="unit-cost", ge=0)
+    quantity: int = Field(description="Stock Quantity per operation", ge=0)
     tax: Optional[float] = Field(
-        description="Tax to be paid on profit per sell operation",
+        description="Tax to be paid on profit for sell operation",
         default=None,
+        ge=0,
     )
 
     @property

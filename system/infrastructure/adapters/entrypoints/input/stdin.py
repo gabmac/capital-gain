@@ -15,6 +15,7 @@ class ReadStdIn(ReadInputPort):
 
     def input(self) -> None:
         self.data = input()
+        self.data = self.data.replace("'", '"')
 
     def read_input(self) -> Optional[List[Dict[str, Union[str, int, float]]]]:
         """

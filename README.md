@@ -99,7 +99,7 @@ In the challenge, we have a very well-defined objective, so we were able to iden
 
 |Operation|
 |---|
-|operation_type: OperationType|
+|type: OperationType|
 |unit-cost:float|
 |quantity: int|
 |tax:float|
