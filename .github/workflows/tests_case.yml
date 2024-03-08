@@ -30,9 +30,9 @@ jobs:
       run: |
         echo ${{ github.base_ref }}
         poetry install
+      env:
+        POETRY_VIRTUALENVS_CREATE: false
 
     - name: test case
       run: |
         ./cases/test_case.sh
-      env:
-        RUN_POETRY: 0
