@@ -29,7 +29,8 @@ jobs:
     - name: "Install dependencies - poetry"
       run: |
         echo ${{ github.base_ref }}
-        poetry install
+        poetry export --without-hashes --without dev -f requirements.txt -o
+        pip install -r requirements.txt
       env:
         POETRY_VIRTUALENVS_CREATE: false
 
