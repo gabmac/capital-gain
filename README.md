@@ -285,3 +285,33 @@ Clean architecture is composed of several layers, which typically include:
 **Application**: The application layer is responsible for orchestrating the actions of the system, applying the business rules of the entity layer.
 
 **Infrastructure**: This is the layer responsible for implementing technical details, such as access to databases, calls to external services, etc.
+
+### Directory Structure
+
+#### .github
+Github Config files
+
+*PULL_REQUEST_TEMPLATE.md* -> A Template for pull requests, this way all PR`s can be standardized
+
+*workflows/* -> In this directory there is some workflow that help with the pipeline
+* *linter.yml* -> Run all the hooks explained in [pre-commit](#pre-commit-and-code-smells)
+* *merge_main.yml* -> Every Pull Request has merge from main the base branch to keep it updated
+* *pull_request_labeler* -> Helps to give at least on label per pull request
+* *release.yml* -> Runs Everytime that a Pull Request is merged, it creates a relase with tag, helping to version the project and keep a changelog of all the system.
+* *test_case.yml* -> runs the project cases and compare with the solution
+* *update_package.yml* -> Update the third party packages
+* *tests.yml* -> Run the unit tests
+* *validation.yml* -> Orchestrate all the pipeline in every Pull Request
+
+#### system
+Here there is all the application files
+
+#### tests
+Suite tests
+
+#### cases
+There are all example project cases
+
+* *<<caseno>>_input* -> input for case
+* *<<caseno>>_output* -> expected system output
+* *test_case.sh* -> Run the application for each input and compares with expected output
