@@ -2,7 +2,7 @@
 
 # Directory to search in, "." means current directory.
 # Replace "." with "/path/to/your/directory" to search in a specific directory.
-DIRECTORY="."
+DIRECTORY="cases"
 
 # File pattern to match
 PATTERN="*_input.txt"
@@ -21,12 +21,8 @@ find "$DIRECTORY" -type f -name "$PATTERN" | while read -r file; do
   # Execute the Python command with the current file as input
   # and store the output in a temporary file
   temp_output=$(mktemp)
-  RUN_POETRY="${MY_ENV_VAR:-1}"
-  if  [ "$RUN_POETRY" -eq 1 ]; then
-    python -m system < "$file" > "$temp_output"
-  else
-    poetry run python -m system < "$file" > "$temp_output"
-  fi
+  python -m system < "$file" > "$temp_output"
+
   # Remove any space characters from the temporary file
   tr -d ' ' < "$temp_output" > "${temp_output}_nospace"
   mv "${temp_output}_nospace" "$temp_output"
