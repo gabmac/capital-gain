@@ -29,7 +29,7 @@ jobs:
     - name: "Install dependencies - poetry"
       run: |
         echo ${{ github.base_ref }}
-        poetry install --only main
+        poetry install
 
     - name: test case
       run: |
