@@ -99,7 +99,7 @@ In the challenge, we have a very well-defined objective, so we were able to iden
 
 |Operation|
 |---|
-|operation_type: OperationType|
+|type: OperationType|
 |unit-cost:float|
 |quantity: int|
 |tax:float|
@@ -140,7 +140,13 @@ $ poetry self update
 ```
 ---
 
-### Pre-Commit and Code Smells
+### Useful Packages
+
+* [**Pydantic**](https://docs.pydantic.dev/latest/) - Pydantic is the most widely used data validation library for Python. Here it is used for operations data manipulation.
+
+---
+
+## Pre-Commit and Code Smells
 
 Before **any** commit we run a set of hooks that help us with the quality of the code.
 
@@ -199,7 +205,7 @@ To run the project with Docker, it is necessary to have it installed on your mac
 
 ---
 
-### Unit Tests and TDD
+## Unit Tests and TDD
 
 The project was developed using the Test-Driven Development strategy, which is based on a short cycle of repetitions that consists of Writing the test, Writing the code, and Refactoring the code.
 
@@ -217,7 +223,7 @@ To modify and add tests, go to `./<repository>/tests`.
 
 The test will run automatically in the CI.
 
-#### Test Coverage
+### Test Coverage
 
 Because the test scripts forward arguments to `unittest`, to run the tests in a
 running stack with coverage with terminal reports:
@@ -248,7 +254,7 @@ $ make run-unit-test
 
 ---
 
-#### Cases
+## Cases
 
 If you want to run and compare with the cases that came in project you can run:
 

@@ -24,7 +24,6 @@ run-all-tests:
 
 build-run-all-tests: build-all-tests run-all-tests
 
-
 run-unit-test:
 	docker run capital-gain-test
 

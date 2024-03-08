@@ -8,12 +8,12 @@ from system.domain.entity.operation_entity import OperationEntity
 class OperationEntityFixture:
     def __init__(
         self,
-        operation_type: OperationType = OperationType.BUY.value,
+        type: OperationType = OperationType.BUY.value,
         unit_cost: float = 4,
         quantity: float = 100000,
         tax: Optional[float] = 0,
     ) -> None:
-        self.operation_type = operation_type
+        self.type = type
         self.unit_cost = unit_cost
         self.quantity = quantity
         self.tax = tax
@@ -21,7 +21,7 @@ class OperationEntityFixture:
     @property
     def mock_operation(self) -> OperationEntity:
         return OperationEntity(
-            operation_type=self.operation_type,
+            type=self.type,
             unit_cost=self.unit_cost,
             quantity=self.quantity,
             tax=self.tax,
@@ -30,13 +30,13 @@ class OperationEntityFixture:
     @property
     def mock_sell_with_profit(self) -> List[OperationEntity]:
         buy_operation = OperationEntity(
-            operation_type=OperationType.BUY.value,
+            type=OperationType.BUY.value,
             unit_cost=self.unit_cost,
             quantity=self.quantity,
             tax=self.tax,
         )
         sell_operation_profit = OperationEntity(
-            operation_type=OperationType.SELL.value,
+            type=OperationType.SELL.value,
             unit_cost=self.unit_cost * 2,
             quantity=self.quantity,
             tax=OperationTax.TAX_PERCENT.value * self.unit_cost * self.quantity,
@@ -58,14 +58,14 @@ class OperationTaxDTOFixture:
         self.unit_cost = unit_cost
         self.quantity = quantity
         self.entity_fixture_buy = OperationEntityFixture(
-            operation_type=OperationType.BUY.value,
+            type=OperationType.BUY.value,
             unit_cost=self.unit_cost,
             quantity=self.quantity,
             tax=0,
         )
 
         self.entity_fixture_sell = OperationEntityFixture(
-            operation_type=OperationType.SELL.value,
+            type=OperationType.SELL.value,
             unit_cost=self.unit_cost,
             quantity=self.quantity,
             tax=tax,
