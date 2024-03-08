@@ -8,7 +8,7 @@ on:
 
 concurrency:
   cancel-in-progress: true
-  group: "release-exchange-${GITHUB_REF##*/}"
+  group: "release-capital-gain-${GITHUB_REF##*/}"
 
 jobs:
 
