@@ -1,0 +1,38 @@
+name: Tests Case
+
+on:
+  workflow_dispatch:
+  workflow_call:
+
+jobs:
+  test-case:
+    runs-on: ubuntu-latest
+    env:
+      BRANCH_NAME: "${{ github.event.pull_request.base.ref }}"
+    permissions:
+      contents: read
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install dependencies - pip
+      run: |
+        echo ${{ github.base_ref }}
+        python -m pip install --upgrade pip
+        curl -sSL https://install.python-poetry.org | python3 -
+
+    - name: "Set up Python"
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.10'
+        cache: 'poetry'
+
+    - name: "Install dependencies - poetry"
+      run: |
+        echo ${{ github.base_ref }}
+        poetry install --only main
+
+    - name: test case
+      run: |
+        ./cases/test_case.sh
+      env:
+        RUN_POETRY: 0
