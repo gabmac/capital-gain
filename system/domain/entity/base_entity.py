@@ -1,13 +1,6 @@
-from datetime import datetime, timezone
-from typing import Any, Dict
+from typing import Any
 
-from pydantic import (
-    BaseModel,
-    ConfigDict,
-    ValidationInfo,
-    field_validator,
-    root_validator,
-)
+from pydantic import BaseModel, ConfigDict, ValidationInfo, field_validator
 from pydantic_core import PydanticUndefined
 
 
@@ -23,18 +16,6 @@ class BaseEntity(BaseModel):
         validate_assignment=True,
         from_attributes=True,
     )
-
-    @root_validator(pre=True)
-    def convert_input_datetime_add_tzinfo(
-        cls: Any,
-        values: Dict[str, Any],
-    ) -> Dict[str, Any]:
-        if isinstance(values, dict):
-            for field_name, value in values.items():
-                if isinstance(value, datetime) and values[field_name].tzinfo is None:
-                    values[field_name] = values[field_name].replace(tzinfo=timezone.utc)
-
-        return values
 
     @field_validator("*", mode="before")
     @classmethod

@@ -14,6 +14,13 @@ class OperationTaxCalculatorTest(OperationUseCaseConfTest):
             self.assertEqual(self.operation_tax_fixture.mock_buy_tax_value, result)
             self.assertEqual(self.operation_tax_fixture.mock_buy_tax_value.tax, 0)
 
+        self.assertEqual(
+            self.tax_calculator_usecase._operation_type_is_not_applicable(
+                self.operation_tax_fixture.entity_fixture_buy.mock_operation,
+            ),
+            True,
+        )
+
     def test_sell_operation_not_reached_threshold(self) -> None:
         results = self.tax_calculator_usecase.caculate_tax(
             operations=[
@@ -28,6 +35,13 @@ class OperationTaxCalculatorTest(OperationUseCaseConfTest):
                 result,
             )
             self.assertEqual(result.tax, 0)
+
+        self.assertEqual(
+            self.tax_calculator_usecase._operation_under_threshold(
+                self.operation_tax_above_threshold_fixture.entity_fixture_sell.mock_operation,
+            ),
+            True,
+        )
 
     def test_sell_operation_with_loss(self) -> None:
         self.tax_calculator_usecase.loss = -1e50
