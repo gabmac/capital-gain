@@ -33,8 +33,6 @@ CMD ["python -m system"]
 
 FROM build-test as test
 
-RUN poetry install --only dev
-
 CMD ["coverage run -m unittest discover -v -s ./tests -p '*test*.py';coverage report;exit 0"]
 
 FROM local as test-case

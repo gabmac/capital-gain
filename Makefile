@@ -17,9 +17,13 @@ build-all:
 	docker build -t capital-gain-case --target=test-case . $(CACHE)
 	docker build -t capital-gain-local --target=local . $(CACHE)
 
+
 run-all-tests:
 	docker run capital-gain-test
 	docker run capital-gain-case
+
+build-run-all-tests: build-all-tests run-all-tests
+
 
 run-unit-test:
 	docker run capital-gain-test
