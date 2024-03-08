@@ -315,3 +315,14 @@ There are all example project cases
 * *<<caseno>>_input* -> input for case
 * *<<caseno>>_output* -> expected system output
 * *test_case.sh* -> Run the application for each input and compares with expected output
+
+
+#### Pipeline
+
+Every Pull Request follows:
+
+[Pull Request](/images/pull_request.PNG)
+
+After the merge on main, there will be a release:
+
+[Release](/images/release.PNG)
