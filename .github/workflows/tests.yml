@@ -10,7 +10,7 @@ jobs:
     env:
       BRANCH_NAME: "${{ github.event.pull_request.base.ref }}"
     permissions:
-      contents: read
+      contents: write
     steps:
     - uses: actions/checkout@v3
 
@@ -37,3 +37,10 @@ jobs:
       run: |
         poetry run coverage run -m unittest discover -v -s ./tests -p "*test*.py"
         poetry run coverage report
+        poetry run coverage-badge -f -o "coverage.svg"
+
+    - name: Updating package
+      id: changes
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: "style: Coverage Badge"
