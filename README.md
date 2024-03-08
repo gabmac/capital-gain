@@ -1,5 +1,4 @@
 [![python](https://img.shields.io/badge/Python-3.10-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org)
-[![FastAPI](https://img.shields.io/badge/FastAPI-009688.svg?style=flat&logo=FastAPI&logoColor=white)](https://fastapi.tiangolo.com)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Checked with mypy](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)
 [![poetry](https://img.shields.io/badge/maintained%20with-poetry-rgb(30%2041%2059).svg)](https://python-poetry.org/)
@@ -8,6 +7,24 @@
 # Technical Challenge: Capital Gain
 
 The goal of this challenge is to  to implement a command line program (CLI) that calculates the tax to be paid on profits or losses from operations in the stock market.
+
+## Run Application
+
+To run the application you need to install [docker](#docker) and to make it easier you can install [make](#make).
+
+Using docker:
+```bash
+$ docker build -t capital-gain-local --target=local . --no-cache
+$ docker run -i capital-gain-local
+```
+
+Using make:
+```bash
+$ make build-application
+$ make run
+```
+
+For both cases the build is only needed on the first time.
 
 ## **Acceptance Criteria**
 
@@ -150,6 +167,15 @@ After that, every commit you execute will run all the hooks.
 ---
 
 
+## Make
+
+The make command compiles different program pieces and builds a final executable. The purpose of make is to automate file compilation, making the process simpler and less time-consuming. The command works with any programming language as long as the compiler can be executed with a shell command. Everything is orchestrated based on Makefile
+
+- **Ubuntu:** [Install Make on Ubuntu](https://ioflood.com/blog/install-make-command-linux/#:~:text=In%20most%20Linux%20distributions%2C%20the,command%20sudo%20yum%20install%20make%20.)
+- **Mac:** [Install Make on Mac](https://formulae.brew.sh/formula/make)
+- **Windows:** [Install Make on Windows](https://gnuwin32.sourceforge.net/packages/make.htm)
+
+
 ## Docker
 
 Docker is an open-source platform that automates the deployment, scaling, and management of applications. It does this through containerization, a lightweight form of virtualization.
@@ -171,36 +197,6 @@ To run the project with Docker, it is necessary to have it installed on your mac
 - **Mac:** [Install Docker Engine on Mac](https://docs.docker.com/desktop/install/mac-install/)
 - **Windows:** [Install Docker Engine on Windows](https://docs.docker.com/desktop/install/windows-install/)
 
-
-During development, you can change Docker Compose settings that will only affect
-the local development environment in the file `docker-compose.yml`.
-
-The changes on that file only affect the local development environment, not
-the production environment. So, you can add "temporary" changes that help the
-development workflow.
-
-For example, the directory with the backend code is mounted as a Docker
-"host volume", mapping the code you change live to the directory inside the container.
-That allows you to test your changes right away, without having to build the
-Docker image again. It should only be done during development.
-
-For production, you should build the Docker image with a recent version of the
-backend code, but during development, it allows you to make changes very fast.
-
-To initialize the application, first you need it to build:
-
-```bash
-$ docker compose -f docker-compose.dev.yml build
-```
-
-Then run:
-
-```bash
-$ docker compose -f docker-compose.dev.yml up
-```
-
-Be sure that OpenSearch Node is up, what else the api can returns 500.
-
 ---
 
 ### Unit Tests and TDD
@@ -214,19 +210,12 @@ The tests run on a class-based architecture based on unittest.IsolatedAsyncioTes
 To test the backend, run:
 
 ```bash
-$ poetry run unittest -v
+$ poetry run unittest discover -v -s ./tests -p '*test*.py
 ```
 
 To modify and add tests, go to `./<repository>/tests`.
 
 The test will run automatically in the CI.
-
-**Note**: To execute some tests, the database container needs to be up. To do this,
-you can run:
-
-```bash
-$ docker compose -f docker-compose.dev.yml up dynamodb-local
-```
 
 #### Test Coverage
 
@@ -234,7 +223,7 @@ Because the test scripts forward arguments to `unittest`, to run the tests in a
 running stack with coverage with terminal reports:
 
 ```bash
-$ poetry run coverage run -m unittest -v
+$ poetry run unittest discover -v -s ./tests -p '*test*.py
 $ poetry run coverage report
 ```
 
@@ -244,13 +233,35 @@ To generate HTML report runs:
 $ poetry run coverage html
 ```
 
-You can use `docker compose` to run tests too:
+You can use `docker` to run tests too:
 
 ```bash
-$ docker compose -f docker-compose.test.yml build
-$ docker compose -f docker-compose.test.yml up
+$ docker build -t capital-gain-case --target=test-case .
+$ docker run capital-gain-test
 ```
 
+You can use `make` to run tests:
+```bash
+$ make build-unit-test
+$ make run-unit-test
+```
+
+---
+
+#### Cases
+
+If you want to run and compare with the cases that came in project you can run:
+
+```bash
+$ docker build -t capital-gain-case --target=test-case .
+$ docker run capital-gain-case
+```
+
+
+```bash
+$ make build-cases-test
+$ make run-cases-test
+```
 
 ---
 
@@ -274,3 +285,44 @@ Clean architecture is composed of several layers, which typically include:
 **Application**: The application layer is responsible for orchestrating the actions of the system, applying the business rules of the entity layer.
 
 **Infrastructure**: This is the layer responsible for implementing technical details, such as access to databases, calls to external services, etc.
+
+### Directory Structure
+
+#### .github
+Github Config files
+
+*PULL_REQUEST_TEMPLATE.md* -> A Template for pull requests, this way all PR`s can be standardized
+
+*workflows/* -> In this directory there is some workflow that help with the pipeline
+* *linter.yml* -> Run all the hooks explained in [pre-commit](#pre-commit-and-code-smells)
+* *merge_main.yml* -> Every Pull Request has merge from main the base branch to keep it updated
+* *pull_request_labeler* -> Helps to give at least on label per pull request
+* *release.yml* -> Runs Everytime that a Pull Request is merged, it creates a relase with tag, helping to version the project and keep a changelog of all the system.
+* *test_case.yml* -> runs the project cases and compare with the solution
+* *update_package.yml* -> Update the third party packages
+* *tests.yml* -> Run the unit tests
+* *validation.yml* -> Orchestrate all the pipeline in every Pull Request
+
+#### system
+Here there is all the application files
+
+#### tests
+Suite tests
+
+#### cases
+There are all example project cases
+
+* *<<caseno>>_input* -> input for case
+* *<<caseno>>_output* -> expected system output
+* *test_case.sh* -> Run the application for each input and compares with expected output
+
+
+#### Pipeline
+
+Every Pull Request follows:
+
+![Pull Request](/images/pull_request.PNG)
+
+After the merge on main, there will be a release:
+
+![Release](/images/release.PNG)
