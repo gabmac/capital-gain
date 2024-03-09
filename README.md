@@ -228,7 +228,7 @@ The tests run on a class-based architecture based on unittest.IsolatedAsyncioTes
 To test the backend, run:
 
 ```bash
-$ poetry run unittest discover -v -s ./tests -p '*test*.py
+$ poetry run unittest discover -v -s ./tests -p '*test*.py'
 ```
 
 To modify and add tests, go to `./<repository>/tests`.
@@ -241,7 +241,7 @@ Because the test scripts forward arguments to `unittest`, to run the tests in a
 running stack with coverage with terminal reports:
 
 ```bash
-$ poetry run unittest discover -v -s ./tests -p '*test*.py
+$ poetry run unittest discover -v -s ./tests -p '*test*.py'
 $ poetry run coverage report
 ```
 
