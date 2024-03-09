@@ -13,7 +13,7 @@ class ReadStdIn(ReadInputPort):
         self.usecase = usecase()
         self.data: List[str] = []
 
-    def input(self) -> None:
+    def _input(self) -> None:
         while True:
             try:
                 line = input()
@@ -27,6 +27,8 @@ class ReadStdIn(ReadInputPort):
         """
         Read Input From StdIn
         """
+
+        self._input()
 
         data_to_return = []
         for line in self.data:

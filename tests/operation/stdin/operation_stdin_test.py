@@ -33,3 +33,5 @@ class TestOperationStdIn(OperationStdinConfTest):
                 ),
             ],
         )
+
+        self.patch_input.target._input.assert_called_once()

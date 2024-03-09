@@ -19,9 +19,15 @@ class OperationStdinConfTest(BaseOperationConfTest, BaseStdinConfTest):
             OperationTaxCalculatorUseCase,
             "caculate_tax",
         )
+        cls.patch_input = patch.object(
+            ReadStdIn,
+            "_input",
+        )
         cls.patch_use_case.start()
+        cls.patch_input.start()
         return super().setUpClass()
 
     def tearDown(self) -> None:
         self.patch_use_case.stop()
+        self.patch_input.stop()
         return super().tearDown()

@@ -7,6 +7,5 @@ if __name__ == "__main__":
     handler = ReadStdIn(
         usecase=OperationTaxCalculatorUseCase,
     )
-    handler.input()
     for data in handler.read_input():
         print(data)
