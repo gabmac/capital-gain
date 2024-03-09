@@ -8,7 +8,5 @@ if __name__ == "__main__":
         usecase=OperationTaxCalculatorUseCase,
     )
     handler.input()
-    data = handler.read_input()
-    print(
-        data,
-    )
+    for data in handler.read_input():
+        print(data)

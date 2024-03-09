@@ -11,7 +11,7 @@ class TestOperationStdIn(OperationStdinConfTest):
         return super().setUp()
 
     def test_operation_stdin(self) -> None:
-        self.input_handler.data = json.dumps(
+        data_str = json.dumps(
             [
                 self.operation_tax_fixture.entity_fixture_buy.mock_operation.model_dump(
                     exclude="tax",
@@ -19,10 +19,11 @@ class TestOperationStdIn(OperationStdinConfTest):
                 ),
             ],
         )
+        self.input_handler.data = [data_str]
         result = self.input_handler.read_input()
         self.assertEqual(
             result,
-            [self.operation_tax_fixture.mock_buy_tax_value.model_dump()],
+            [[self.operation_tax_fixture.mock_buy_tax_value.model_dump()]],
         )
         self.patch_use_case.target.caculate_tax.assert_called_once_with(
             operations=[
