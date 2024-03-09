@@ -21,11 +21,15 @@ find "$DIRECTORY" -type f -name "$PATTERN" | while read -r file; do
   # Execute the Python command with the current file as input
   # and store the output in a temporary file
   temp_output=$(mktemp)
+  echo "Input -> $(cat $file)"
+  echo "Expected Output -> $(cat $expected_output_file)"
   python -m system < "$file" > "$temp_output"
 
   # Remove any space characters from the temporary file
   tr -d ' ' < "$temp_output" > "${temp_output}_nospace"
   mv "${temp_output}_nospace" "$temp_output"
+
+  echo -e "Actual Output -> $(cat $temp_output)\n\n"
 
   # Ensure there's no newline at the end of the temporary file
   # Using Perl as a more compatible alternative to sed across different systems
