@@ -1,4 +1,4 @@
-[![python](https://img.shields.io/badge/Python-3.10-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org)
+[![python](https://img.shields.io/badge/Python-3.11-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 ![Coverage](/coverage.svg)
 [![Checked with mypy](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)
@@ -203,6 +203,17 @@ To run the project with Docker, it is necessary to have it installed on your mac
 - **Ubuntu:** [Install Docker Engine on Ubuntu](https://docs.docker.com/engine/install/ubuntu/)
 - **Mac:** [Install Docker Engine on Mac](https://docs.docker.com/desktop/install/mac-install/)
 - **Windows:** [Install Docker Engine on Windows](https://docs.docker.com/desktop/install/windows-install/)
+
+### [Distroless Images](https://github.com/GoogleContainerTools/distroless?tab=readme-ov-file)
+
+Distroless" images contain only your application and its runtime dependencies. They do not contain package managers, shells or any other programs you would expect to find in a standard Linux distribution. It is based on a extremely slimmed Linux distribution which contains runtime and application only, nothing else.
+
+1. **Reduced Attack Surface**: By excluding unnecessary tools, binaries, and shell, Distroless images offer a smaller surface for potential attacks. There’s simply less in the image that can be exploited.
+2. **Minimized Vulnerabilities**: With fewer components in the image, there are fewer potential points of failure. This can reduce the number of vulnerabilities and the frequency of required patches.
+3. **No Shell**: Distroless images don’t contain a shell. This means if an attacker manages to get into the container, they won’t have a shell to execute further malicious commands, making it more challenging to move laterally or escalate privileges.
+4. **Clearer Dependency Management**: By including only what’s necessary to run the application, it’s clearer what dependencies are present, making it easier to manage and update them. This clarity ensures that security patches are more straightforward to track and apply.
+
+*In this application only the system container will run with this, the containers that mean to be used with test, keep it using `python-slim`
 
 ---
 

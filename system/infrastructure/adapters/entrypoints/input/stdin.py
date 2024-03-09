@@ -17,6 +17,7 @@ class ReadStdIn(ReadInputPort):
         while True:
             try:
                 line = input()
+                line = line.strip()
                 if not line:  # exit loop when empty line.
                     break
                 self.data.append(line)
@@ -32,7 +33,6 @@ class ReadStdIn(ReadInputPort):
 
         data_to_return = []
         for line in self.data:
-            line = line.strip()
             line = line.replace("'", '"')
             json_data = json.loads(line)
             data_to_return.append(
