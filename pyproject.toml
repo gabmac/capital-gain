@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "capital-gain"
-version = "0.2.2"
+version = "1.0.0"
 description = "Capital Gain Project"
 authors = ["Gabriel <gabrielbonanimachado@gmail.com>"]
 readme = "README.md"
