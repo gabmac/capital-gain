@@ -29,7 +29,7 @@ find "$DIRECTORY" -type f -name "$PATTERN" | while read -r file; do
   tr -d ' ' < "$temp_output" > "${temp_output}_nospace"
   mv "${temp_output}_nospace" "$temp_output"
 
-  echo -e "Actual Output -> $(cat $temp_output)\n\n"
+  echo "Actual Output -> $(cat $temp_output)"
 
   # Ensure there's no newline at the end of the temporary file
   # Using Perl as a more compatible alternative to sed across different systems
@@ -37,7 +37,7 @@ find "$DIRECTORY" -type f -name "$PATTERN" | while read -r file; do
 
   # Compare the temporary output file with the expected output file
   if diff -Z "$temp_output" "$expected_output_file" > /dev/null; then
-    echo "Success: Output matches for $file"
+    echo -e "Success: Output matches for $file \n\n"
   else
     echo "Failure: Output does not match for $file. Differences shown below:"
     # Show the differences, ignoring trailing whitespace
