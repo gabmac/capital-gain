@@ -1,10 +1,11 @@
 import json
-from typing import Dict, List, Type, Union
+from typing import List, Type
 
 from system.application.ports.inputs.inputs_port import ReadInputPort
 from system.application.ports.usecase.operation_tax_calculator_port import (
     OperationTaxCalculatorPort,
 )
+from system.application.typings.operation_type import OperationInput
 
 
 class ReadStdIn(ReadInputPort):
@@ -24,7 +25,7 @@ class ReadStdIn(ReadInputPort):
             except EOFError:
                 break
 
-    def read_input(self) -> List[List[Dict[str, Union[str, int, float]]]]:
+    def read_input(self) -> List[List[OperationInput]]:
         """
         Read Input From StdIn
         """
