@@ -1,9 +1,10 @@
-from typing import Dict, List, Union
+from typing import List
 
 from system.application.dto.tax_dto import OperationTaxDto
 from system.application.ports.usecase.operation_tax_calculator_port import (
     OperationTaxCalculatorPort,
 )
+from system.application.typings.operation_type import OperationInput
 from system.domain.constants.operation import OperationTax, OperationType
 from system.domain.entity.operation_entity import OperationEntity
 
@@ -16,7 +17,7 @@ class OperationTaxCalculatorUseCase(OperationTaxCalculatorPort):
 
     def caculate_tax(
         self,
-        operations: List[Dict[str, Union[str, int, float]]],
+        operations: List[OperationInput],
     ) -> List[OperationTaxDto]:
         """
         Calculate tax given an operation list
