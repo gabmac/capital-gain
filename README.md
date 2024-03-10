@@ -25,6 +25,17 @@ $ make build-application
 $ make run
 ```
 
+If you wanna run based on file, you can run like this:
+```bash
+$ make run < <file>.txt
+```
+
+Or
+
+```bash
+$ docker run -i capital-gain-local < <file>.txt
+```
+
 For both cases the build is only needed on the first time.
 
 ## **Acceptance Criteria**
