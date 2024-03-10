@@ -10,7 +10,7 @@ from system.application.ports.usecase.operation_tax_calculator_port import (
 class ReadStdIn(ReadInputPort):
     def __init__(self, usecase: Type[OperationTaxCalculatorPort]) -> None:
         super().__init__()
-        self.usecase = usecase()
+        self.usecase = usecase
         self.data: List[str] = []
 
     def _input(self) -> None:
@@ -35,10 +35,11 @@ class ReadStdIn(ReadInputPort):
         for line in self.data:
             line = line.replace("'", '"')
             json_data = json.loads(line)
+            run_usecase = self.usecase()
             data_to_return.append(
                 [
                     data.model_dump(mode="json")
-                    for data in self.usecase.caculate_tax(
+                    for data in run_usecase.caculate_tax(
                         operations=json_data,
                     )
                 ],

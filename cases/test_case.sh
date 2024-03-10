@@ -11,7 +11,7 @@ PATTERN="*_input.txt"
 failed=0
 
 # Find files that match the pattern
-find "$DIRECTORY" -type f -name "$PATTERN" | while read -r file; do
+find "$DIRECTORY" -type f -name "$PATTERN" | sort | while read -r file; do
   # Extract the base name of the file without the directory path
   base_name=$(basename "$file" "_input.txt")
 

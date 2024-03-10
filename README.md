@@ -105,6 +105,8 @@ In the challenge, we have a very well-defined objective, so we were able to iden
 |quantity: int|
 |tax:float|
 
+
+
 ---
 
 ## Package Manager
@@ -178,6 +180,37 @@ After that, every commit you execute will run all the hooks.
 
 The make command compiles different program pieces and builds a final executable. The purpose of make is to automate file compilation, making the process simpler and less time-consuming. The command works with any programming language as long as the compiler can be executed with a shell command. Everything is orchestrated based on Makefile
 
+Command Lists:
+
+
+- **build-unit-test**: Builds a Docker image tagged as capital-gain-test for running unit tests. The --target=test option specifies that only the stages up to and including test in the Dockerfile should be built.
+
+- **build-application**: Creates a Docker image tagged as capital-gain-local for the application's local deployment. The --target=local option is used to build stages up to local in the Dockerfile.
+
+- **build-cases-test**: Constructs a Docker image tagged capital-gain-case for running case tests, with --target=test-case indicating the specific stage to build in the Dockerfile.
+
+- **build-all-tests**: Builds both the unit test and cases test Docker images in one command.
+
+- **build-all**: Builds all necessary Docker images for both testing (unit and cases) and local deployment of the application.
+
+- **run-all-tests**: Executes both unit and case tests by running the respective Docker containers.
+
+- **build-run-all-tests**: A compound target that first builds all test images and then runs all tests, combining build-all-tests and run-all-tests targets.
+
+- **run-unit-test**: Runs the unit test Docker container.
+
+- **run-cases-test**: Runs the cases test Docker container.
+
+- **run**: Executes the Docker container for the application's local deployment in interactive mode.
+#
+
+For build commands you can use CACHE variable with the value `--no-cache` to build without cache, for example:
+
+```bash
+$ make build-<rest of the command> CACHE=--no-cache
+```
+
+#
 - **Ubuntu:** [Install Make on Ubuntu](https://ioflood.com/blog/install-make-command-linux/#:~:text=In%20most%20Linux%20distributions%2C%20the,command%20sudo%20yum%20install%20make%20.)
 - **Mac:** [Install Make on Mac](https://formulae.brew.sh/formula/make)
 - **Windows:** [Install Make on Windows](https://gnuwin32.sourceforge.net/packages/make.htm)
